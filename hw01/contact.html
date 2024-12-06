@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Resume</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+
+    <!-- navbar -->
+    <div class="navbar" id="top">
+    <a href="./index.html">Home</a> | 
+    <a href="./education.html">Education</a> |
+    <a href="./work.html">Work Experience</a> |
+    <strong><a href="#">Contact Me</a> </strong>
+    </div>
+    <hr />
+
+    <div class="container">
+    <h1>Contact Me</h1>
+    <div class="container-form">
+        Enter your info.<br />
+        <div class="alertMessage">
+            <!-- Show error message here -->
+            <div id="errMessage" style="color: red"></div>
+            <!-- Show clear content message here -->
+            <div id="sccMessage" style="color: green"></div>
+        </div>
+       <form id="form" onsubmit="submitEvent(e)">
+            <label for="fname">Your Name</label><br />
+            <input id="fname" name="fname" type="text" placeholder="please type your name" ><br /><br />
+            <label for="email">Your E-mail</label><br />
+            <input id="email" name="email" type="email" placeholder="please type your email" ><br /><br />
+            <label for="gender">Gender</label><br />
+            <select id="gender" name="gender" >
+                <option disabled selected value>Select..</option>
+                <option value="female">Female</option>
+                <option value="male">Male</option>
+                <option value="unknown">Prefer not to specify</option>
+            </select><br /><br />
+            <label for="message">Message</label><br />
+            <textarea id="message" name="message" ></textarea><br /> <br />
+            <input id="submit" type="submit" name="submit">
+            <button id="clear" name="clear" class="clear" onclick="clearForm()">Clear</button>
+       </form> 
+    </div>
+       <hr />
+        <!-- footer -->
+        <a href="https://www.google.com/">Go to Google</a> | 
+        <a href="#top">  ↑  Go to top</a>
+    </div>
+
+    <script>
+        // dim button
+        const button = document.querySelector('#submit'); 
+        const clear = document.querySelector('#clear'); 
+
+        // dim input 
+        const fname = document.querySelector('#fname'); 
+        const email = document.querySelector('#email'); 
+        const gender = document.querySelector('#gender'); 
+        const message = document.querySelector('#message'); 
+
+        // dim alert messages
+        const alertMessage = document.querySelector('#alertMessage')
+        const errorElement = document.querySelector('#errMessage'); 
+        const sccElement = document.querySelector('#sccMessage')
+
+        // event to submit button
+        button.addEventListener('click', (e) => {
+            e.preventDefault() //prevent Clicking on a "Submit" button from submitting a form
+            let errMessage = [];
+            sccElement.innerText = ''
+
+            if (fname.value === '') {
+                errMessage.push('First name is required');
+            }
+            if (email.value === '') {
+                errMessage.push('Email is required');
+            }
+            if (gender.value === '') {
+                errMessage.push('Gender is required');
+            }
+            if (message.value === '') {
+                errMessage.push('Message is required');
+            }
+            if (errMessage.length > 0) {
+                errMessage = errMessage.join(', ');
+                errorElement.innerText = errMessage + "\n\n"
+            } else {
+                // delete err message(s) and show the result
+                errorElement.innerText = '' 
+                alert(`Form submitted. \n
+                First name : ${fname.value} \n
+                Email : ${email.value} \n
+                Gender : ${gender.value} \n
+                Message : ${message.value} \n
+                `);
+
+                // clear message 
+                fname.value = ''
+                email.value = ''
+                gender.value = ''
+                message.value = ''
+            }
+        });
+
+        // event to clear button
+        clear.addEventListener('click', (e) => {
+            e.preventDefault()
+            errMessage = [];
+            let sccMessage = []
+            errorElement.innerText = errMessage
+            sccElement.innerText = sccMessage
+
+            if (fname.value === '' && email.value === '' && gender.value === '' && message.value === '') {
+                errMessage = ("Nothing to delete. \n\n");
+                errorElement.innerText = errMessage
+
+            } else {
+                fname.value = ''
+                email.value = ''
+                gender.value = ''
+                message.value = ''
+                sccMessage = ("The message has already been cleared.\n\n");
+                sccElement.innerText = sccMessage
+            }
+        });
+
+</script>
+</body>
+</html>
